@@ -1,3 +1,9 @@
+import React from "react";
+
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <h1> Please log in</h1>
+    </div>
+  );
 }

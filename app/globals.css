@@ -5,6 +5,7 @@
   --shader: #353941;
   --dark-blue: #5f85db;
   --ocean-blue: #90b8f8;
+  --custom-gray: #999393;
 }
 
 @theme inline {
@@ -12,6 +13,7 @@
   --color-shader: var(--shader);
   --color-dark-blue: var(--dark-blue);
   --color-ocean-blue: var(--ocean-blue);
+  --color-custom-gray: var(--custom-gray);
 }
 
 body {

@@ -1,9 +1,9 @@
 import Chat from "../_components/Chat";
-import FriendsList from "../_components/FriendsList";
 import Layout from "../_components/Layout";
+import MessengerSideBar from "../_components/MessengerSideBar";
 
 function page() {
-  return <Layout children1={<FriendsList />} children2={<Chat />} />;
+  return <Layout children1={<MessengerSideBar />} children2={<Chat />} />;
 }
 
 export default page;

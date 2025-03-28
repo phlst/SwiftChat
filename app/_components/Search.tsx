@@ -1,8 +1,8 @@
 import React from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { cva, VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 
-const inputStyles = cva("text-2xl h-full w-full text-custom-gray", {
+const inputStyles = cva("text-2xl focus:outline-none h-full w-full", {
   variants: {
     size: {
       sm: "text-sm",
@@ -20,12 +20,12 @@ const inputStyles = cva("text-2xl h-full w-full text-custom-gray", {
   },
 });
 
-const iconStyles = cva("h-12 w-12", {
+const iconStyles = cva("", {
   variants: {
     size: {
-      sm: "h-6 w-6",
-      md: "h-8 w-8",
-      lg: "h-12 w-12",
+      sm: "h-3 w-3",
+      md: "h-6 w-6",
+      lg: "h-8 w-8",
     },
     color: {
       gray: "text-gray-400",
@@ -33,26 +33,37 @@ const iconStyles = cva("h-12 w-12", {
     },
   },
   defaultVariants: {
-    size: "lg",
+    size: "md",
     color: "gray",
   },
 });
 
-interface FlexibleInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-    VariantProps<typeof inputStyles> {}
+type FlexibleInputProps = {
+  size: "sm" | "md" | "lg";
+  color: "gray" | "blue";
+  placeholder?: string;
+};
 
 const FlexibleInput: React.FC<FlexibleInputProps> = ({
   size,
   color,
+  placeholder,
   ...props
 }) => {
-  return <input className={inputStyles({ size, color })} {...props} />;
+  return (
+    <input
+      type="text"
+      className={inputStyles({ size, color })}
+      placeholder={placeholder}
+      {...props}
+    />
+  );
 };
 
-interface FlexibleIconProps
-  extends React.SVGProps<SVGSVGElement>,
-    VariantProps<typeof iconStyles> {}
+type FlexibleIconProps = {
+  size: "sm" | "md" | "lg";
+  color: "gray" | "blue";
+};
 
 const FlexibleIcon: React.FC<FlexibleIconProps> = ({
   size,
@@ -65,33 +76,24 @@ const FlexibleIcon: React.FC<FlexibleIconProps> = ({
 };
 
 interface SearchProps {
-  className: string;
+  className?: string;
   text: string;
   inputSize?: "sm" | "md" | "lg";
   inputColor?: "gray" | "blue";
-  iconSize?: "sm" | "md" | "lg";
-  iconColor?: "gray" | "blue";
 }
 
 const Search: React.FC<SearchProps> = ({
   className,
   text,
-  inputSize,
-  inputColor,
-  iconSize,
-  iconColor,
+  inputSize = "md", // Provide default value
+  inputColor = "gray", // Provide default value
 }) => {
   return (
     <div
-      className={`border-2 flex items-center rounded-2xl justify-center border-dark-blue ${className}`}
+      className={`border-2 mx-2 px-2 flex items-center rounded-2xl justify-center border-dark-blue ${className}`}
     >
-      <FlexibleIcon size={iconSize} color={iconColor} />
-      <FlexibleInput
-        placeholder={text}
-        size={inputSize}
-        color={inputColor}
-        type="text"
-      />
+      <FlexibleIcon size={inputSize} color={inputColor} />
+      <FlexibleInput placeholder={text} size={inputSize} color={inputColor} />
     </div>
   );
 };

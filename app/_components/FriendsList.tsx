@@ -37,16 +37,64 @@ const friendData = [
     lastMessage: "Zjedz mi kar ty lekvar",
     active: false,
   },
+  {
+    name: "Magyar",
+    img: "/clownImg.jpg",
+    lastMessage: "Zjedz mi kar ty lekvar",
+    active: false,
+  },
+  {
+    name: "Magyar",
+    img: "/clownImg.jpg",
+    lastMessage: "Zjedz mi kar ty lekvar",
+    active: false,
+  },
+  {
+    name: "Magyar",
+    img: "/clownImg.jpg",
+    lastMessage: "Zjedz mi kar ty lekvar",
+    active: false,
+  },
+  {
+    name: "Magyar",
+    img: "/clownImg.jpg",
+    lastMessage: "Zjedz mi kar ty lekvar",
+    active: false,
+  },
+  {
+    name: "Magyar",
+    img: "/clownImg.jpg",
+    lastMessage: "Zjedz mi kar ty lekvar",
+    active: false,
+  },
+  {
+    name: "Magyar",
+    img: "/clownImg.jpg",
+    lastMessage: "Zjedz mi kar ty lekvar",
+    active: false,
+  },
+  {
+    name: "Magyar",
+    img: "/clownImg.jpg",
+    lastMessage: "Zjedz mi kar ty lekvar",
+    active: false,
+  },
+  {
+    name: "Magyar",
+    img: "/clownImg.jpg",
+    lastMessage: "Zjedz mi kar ty lekvar",
+    active: false,
+  },
 ];
 
 function FriendsList() {
   return (
-    <div className="w-full mt-5 h-full flex flex-col space-y-4">
+    <div className="w-full scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-track-background scrollbar scrollbar-thumb-zinc-600  mt-5 max-h-full overflow-y-auto overflow-x-hidden scroll- flex pb-15 flex-col">
       {friendData.map((friend, i) => (
         <div
           className={`flex ${
-            friend.active ? "bg-shader/70" : ""
-          }  justify-start items-center space-x-4 p-4 rounded-lg`}
+            friend.active ? "bg-shader/10" : ""
+          } justify-start items-center space-x-4 p-4 rounded-lg`}
           key={i + friend.name}
         >
           <div className="relative w-16 h-16">

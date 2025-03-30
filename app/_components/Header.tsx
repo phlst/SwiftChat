@@ -8,24 +8,26 @@ import Link from "next/link";
 
 function Header() {
   return (
-    <div className="w-full h-22 flex justify-between items-center px-20">
+    <div className="h-full pt-2  pb-5 w-5 flex flex-col justify-between items-center">
+      <div className="flex flex-col gap-6">
+        <Link
+          className="bg-background/20 flex justify-center items-center rounded-xl w-10 h-10"
+          href="/messenger"
+        >
+          <ChatBubbleOvalLeftIcon color="white" height={26} width={26} />
+        </Link>
+        <Link
+          className=" flex justify-center items-center rounded-xl w-10 h-10"
+          href="/marketplace"
+        >
+          <BuildingStorefrontIcon color="white" height={26} width={26} />
+        </Link>
+      </div>
       <Link
-        className="w-12 h-12 hover:scale-120 transition-all duration-200 flex justify-center items-center bg-shader rounded-lg"
-        href="/messenger"
+        className="flex justify-center items-center rounded-xl w-10 h-10"
+        href="/setting"
       >
-        <ChatBubbleOvalLeftIcon color="#999393" className=" h-10 w-10" />
-      </Link>
-      <Link
-        className="w-12 h-12 hover:scale-120 transition-all duration-200 flex justify-center items-center bg-shader rounded-lg"
-        href="/marketplace"
-      >
-        <BuildingStorefrontIcon color="#999393" className=" h-10 w-10" />
-      </Link>
-      <Link
-        className="w-12 h-12 hover:scale-120 transition-all duration-200 flex justify-center items-center bg-shader rounded-lg"
-        href="/settings"
-      >
-        <Cog6ToothIcon color="#999393" className=" h-10 w-10" />
+        <Cog6ToothIcon color="white" height={26} width={26} />
       </Link>
     </div>
   );

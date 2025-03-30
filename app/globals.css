@@ -1,10 +1,11 @@
 @import "tailwindcss";
+@plugin 'tailwind-scrollbar';
 
 :root {
-  --background: #26282b;
-  --shader: #353941;
-  --dark-blue: #5f85db;
-  --ocean-blue: #90b8f8;
+  --background: #030303;
+  --shader: #f1efec;
+  --dark-blue: #123458;
+  --beige: #d4c9be;
   --custom-gray: #999393;
 }
 
@@ -12,7 +13,7 @@
   --color-background: var(--background);
   --color-shader: var(--shader);
   --color-dark-blue: var(--dark-blue);
-  --color-ocean-blue: var(--ocean-blue);
+  --color-beige: var(--beige);
   --color-custom-gray: var(--custom-gray);
 }
 

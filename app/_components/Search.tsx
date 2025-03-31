@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { cva } from "class-variance-authority";
 
@@ -44,6 +45,8 @@ type FlexibleInputProps = {
   size: "sm" | "md" | "lg";
   color: "gray" | "blue";
   placeholder?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 // FlexibleInput component
@@ -51,14 +54,16 @@ const FlexibleInput: React.FC<FlexibleInputProps> = ({
   size,
   color,
   placeholder,
-  ...props
+  value,
+  onChange,
 }) => {
   return (
     <input
       type="text"
       className={inputStyles({ size, color })}
       placeholder={placeholder}
-      {...props}
+      value={value}
+      onChange={onChange}
     />
   );
 };
@@ -68,16 +73,9 @@ type FlexibleIconProps = {
   size: "sm" | "md" | "lg";
   color: "gray" | "blue";
 };
-
 // FlexibleIcon component
-const FlexibleIcon: React.FC<FlexibleIconProps> = ({
-  size,
-  color,
-  ...props
-}) => {
-  return (
-    <MagnifyingGlassIcon className={iconStyles({ size, color })} {...props} />
-  );
+const FlexibleIcon: React.FC<FlexibleIconProps> = ({ size, color }) => {
+  return <MagnifyingGlassIcon className={iconStyles({ size, color })} />;
 };
 
 // Define prop types for Search
@@ -87,6 +85,7 @@ interface SearchProps {
   inputSize?: "sm" | "md" | "lg";
   inputColor?: "gray" | "blue";
   wantIcon?: boolean;
+  onSubmit?: (value: string) => void;
 }
 
 // Search component
@@ -96,14 +95,32 @@ const Search: React.FC<SearchProps> = ({
   inputSize = "md", // Provide default value
   inputColor = "gray", // Provide default value
   wantIcon = true, // Provide default value
+  onSubmit,
 }) => {
+  const [value, setValue] = useState<string>("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (onSubmit && value.trim() !== "") {
+      onSubmit(value);
+      setValue(""); // Clear the input after submission
+    }
+  };
+
   return (
-    <div
+    <form
+      onSubmit={handleSubmit}
       className={`border-2 mx-2 px-2 flex items-center rounded-2xl justify-center border-dark-blue ${className}`}
     >
       {wantIcon ? <FlexibleIcon size={inputSize} color={inputColor} /> : null}
-      <FlexibleInput placeholder={text} size={inputSize} color={inputColor} />
-    </div>
+      <FlexibleInput
+        placeholder={text}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        size={inputSize}
+        color={inputColor}
+      />
+    </form>
   );
 };
 

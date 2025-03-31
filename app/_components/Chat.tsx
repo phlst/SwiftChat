@@ -1,172 +1,154 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Search from "./Search";
 
-const messages = [
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message:
-      "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message:
-      "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message:
-      "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message:
-      "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message:
-      "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message:
-      "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: true,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-  {
-    receiver: false,
-    message: "Hello baby girl",
-  },
-];
-
 function Chat() {
+  const [messages, setMessages] = useState([
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message:
+        "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message:
+        "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message:
+        "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message:
+        "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message:
+        "Hello baby girl this fine evening i have went to the beatifull park next to my house to look at little children and buy some ice cream",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: true,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+    {
+      receiver: false,
+      message: "Hello baby girl",
+    },
+  ]);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, []);
+  }, [messages]);
+
+  const handleSubmit = (newMessage: string) => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { receiver: false, message: newMessage },
+    ]);
+  };
 
   return (
     <div className="flex flex-col h-full justify-end">
-      <div className="flex flex-col-reverse overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-track-background  scrollbar-thumb-zinc-700 ">
+      <div className="flex flex-col overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-track-background  scrollbar-thumb-zinc-700 ">
         {messages.map((message, i) => (
           <span
             className={`${
@@ -186,6 +168,7 @@ function Chat() {
         text="Type something ..."
         inputSize="lg"
         wantIcon={false}
+        onSubmit={handleSubmit}
       />
     </div>
   );

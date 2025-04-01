@@ -1,13 +1,17 @@
 "use server";
-import { Client, Account, ID, OAuthProvider } from "appwrite";
-import { cookies } from "next/headers";
+import { Client, Account, ID, OAuthProvider } from "node-appwrite";
 
 // Initialize the Appwrite client
 const client = new Client();
 
+const ENDPOINT = process.env.PUBLIC_APPWRITE_ENDPOINT;
+const PROJECT_ID = process.env.PUBLIC_APPWRITE_PROJECT;
+const API_KEY = process.env.APPWRITE_API_KEY;
+
 client
-  .setEndpoint("https://cloud.appwrite.io/v1") // Your Appwrite Endpoint
-  .setProject("67eada88000c043ff1cf"); // Your project ID
+  .setEndpoint(ENDPOINT) // Your Appwrite Endpoint
+  .setKey(API_KEY)
+  .setProject(PROJECT_ID); // Your project ID
 
 const account = new Account(client);
 
@@ -31,19 +35,13 @@ export async function createUser(formData: FormData) {
     console.error("Error creating user:", error);
   }
 }
+
 export async function logInUser(formData: FormData) {
   try {
     const email = formData.get("email");
     const password = formData.get("password");
-
     if (isString(email) && isString(password)) {
       const user = await account.createEmailPasswordSession(email, password);
-      cookies().set("session", user.secret, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-        path: "/",
-      });
       console.log("User logged in successfully:", user);
     } else {
       console.error("Invalid form data");
@@ -51,12 +49,4 @@ export async function logInUser(formData: FormData) {
   } catch (error) {
     console.error("Error logging in:", error);
   }
-}
-
-export async function googleLogIn() {
-  account.createOAuth2Session(
-    OAuthProvider.Google,
-    "http://localhost:3000/messenger",
-    "http://localhost:3000/fail"
-  );
 }

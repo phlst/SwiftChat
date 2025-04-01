@@ -1,29 +1,48 @@
-"use client";
 import React from "react";
 import Image from "next/image";
-import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
+import {
+  UserIcon,
+  EnvelopeIcon,
+  LockClosedIcon,
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { googleLogIn, logInUser } from "./lib/db/appwrite";
+import { createUser, googleLogIn } from "../lib/db/appwrite";
 
-export default function Home() {
+export default function Register() {
   return (
     <div className="w-screen flex justify-center items-center h-screen bg-zinc-800">
       <div className="md:h-[70%] md:w-[70%] h-full w-full flex rounded-2xl shadow-2xl overflow-hidden">
         <div className="w-full md:w-[50%] h-full bg-white flex flex-col justify-center p-8 md:p-12">
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">Sign In</h2>
-            <p className="text-gray-500">Please login to access your account</p>
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">Sign Up</h2>
+            <p className="text-gray-500">Create a new account to get started</p>
           </div>
 
-          <form
-            className="space-y-6"
-            onSubmit={(event) => {
-              event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              logInUser(formData);
-            }}
-          >
+          <form className="space-y-6" action={createUser}>
             <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Name
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <UserIcon className="h-5 w-5" />
+                  </div>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    autoComplete="name"
+                    required
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="John Doe"
+                  />
+                </div>
+              </div>
+
               <div>
                 <label
                   htmlFor="email"
@@ -33,7 +52,7 @@ export default function Home() {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <EnvelopeIcon className="h-5 w-5 " />
+                    <EnvelopeIcon className="h-5 w-5" />
                   </div>
                   <input
                     id="email"
@@ -56,13 +75,13 @@ export default function Home() {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <LockClosedIcon className="h-5 w-5 " />
+                    <LockClosedIcon className="h-5 w-5" />
                   </div>
                   <input
                     id="password"
                     name="password"
                     type="password"
-                    autoComplete="current-password"
+                    autoComplete="new-password"
                     required
                     className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="••••••••"
@@ -71,50 +90,24 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember_me"
-                  name="remember_me"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember_me"
-                  className="ml-2 block text-sm text-gray-700"
-                >
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 hover:text-blue-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
-            </div>
-
             <div>
               <button
                 type="submit"
                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
               >
-                Sign In
+                Sign Up
               </button>
             </div>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Don&apos;t have an account?{" "}
+              Already have an account?{" "}
               <Link
-                href="/register"
+                href="/"
                 className="font-medium text-blue-600 hover:text-blue-500"
               >
-                Sign up
+                Sign in
               </Link>
             </p>
           </div>
@@ -132,17 +125,12 @@ export default function Home() {
             </div>
 
             <div className="mt-6">
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  googleLogIn();
-                }}
-              >
+              <form action={googleLogIn}>
                 <button
                   type="submit"
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 >
-                  <span className="sr-only">Sign in with Google</span>
+                  <span className="sr-only">Sign up with Google</span>
                   <svg
                     className="w-5 h-5"
                     aria-hidden="true"
@@ -165,9 +153,9 @@ export default function Home() {
             priority
           />
           <div className="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white p-8">
-            <h1 className="text-4xl font-bold mb-4">Welcome Back</h1>
+            <h1 className="text-4xl font-bold mb-4">Join Us</h1>
             <p className="text-lg text-center mb-6">
-              Access your account and continue your journey with us
+              Create an account and start your journey with us today
             </p>
           </div>
         </div>

@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import {
   UserIcon,
@@ -6,9 +7,45 @@ import {
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { createUser, googleLogIn } from "../lib/db/appwrite";
+import { createUser, getCurrentUser } from "../lib/db/appwrite";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store/store";
+import {
+  selectIsLoggedIn,
+  selectSession,
+  setSession,
+  setUser,
+} from "../store/authSlice/auth";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
+  const router = useRouter();
+  const isLoggedIn = useSelector((state: RootState) => selectIsLoggedIn(state));
+  const session = useSelector((state: RootState) => selectSession(state));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      if (session || isLoggedIn) {
+        router.push("/messenger");
+      } else {
+        const { success, user } = await getCurrentUser();
+        if (success && user) {
+          dispatch(setUser(user));
+          dispatch(setSession(user.$id));
+          router.push("/messenger");
+        }
+      }
+    };
+
+    checkSession();
+  }, [router, session, isLoggedIn, dispatch]);
+
+  const handleRegistration = async (formData: FormData) => {
+    await createUser(formData);
+    // The server action (createUser) internally calls logInUser which has the redirect logic
+  };
+
   return (
     <div className="w-screen flex justify-center items-center h-screen bg-zinc-800">
       <div className="md:h-[70%] md:w-[70%] h-full w-full flex rounded-2xl shadow-2xl overflow-hidden">
@@ -18,7 +55,14 @@ export default function Register() {
             <p className="text-gray-500">Create a new account to get started</p>
           </div>
 
-          <form className="space-y-6" action={createUser}>
+          <form
+            className="space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target as HTMLFormElement);
+              handleRegistration(formData);
+            }}
+          >
             <div className="space-y-4">
               <div>
                 <label
@@ -125,7 +169,7 @@ export default function Register() {
             </div>
 
             <div className="mt-6">
-              <form action={googleLogIn}>
+              <form>
                 <button
                   type="submit"
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"

@@ -7,6 +7,7 @@ const store = configureStore({
     auth: authReducer,
     messenger: messengerReducer,
   },
+  devTools: true,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

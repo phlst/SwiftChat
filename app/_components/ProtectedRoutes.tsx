@@ -10,7 +10,18 @@ function ProtectedRoutes({
   user: string;
 }) {
   const router = useRouter();
-  return user === "" ? router.push("/") : <>{children}</>;
+
+  React.useEffect(() => {
+    if (user === "") {
+      router.push("/");
+    }
+  }, [user, router]);
+
+  if (user === "") {
+    return null; // Render nothing if user is not authenticated
+  }
+
+  return <>{children}</>;
 }
 
 export default ProtectedRoutes;

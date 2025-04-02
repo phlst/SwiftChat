@@ -1,11 +1,49 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { logInUser } from "./lib/db/appwrite";
+import { logInUser, getCurrentUser } from "./lib/db/appwrite";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "./store/store";
+import {
+  selectIsLoggedIn,
+  selectSession,
+  setSession,
+  setUser,
+} from "./store/authSlice/auth";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const isLoggedIn = useSelector((state: RootState) => selectIsLoggedIn(state));
+  const session = useSelector((state: RootState) => selectSession(state));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      if (session || isLoggedIn) {
+        router.push("/messenger");
+      } else {
+        const { success, user } = await getCurrentUser();
+        if (success && user) {
+          dispatch(setUser(user));
+          dispatch(setSession(user.$id));
+          router.push("/messenger");
+        }
+      }
+    };
+
+    checkSession();
+  }, [router, session, isLoggedIn, dispatch]);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    await logInUser(formData);
+    // No need for manual redirect as the server action will handle it
+  };
+
   return (
     <div className="w-screen flex justify-center items-center h-screen bg-zinc-800">
       <div className="md:h-[70%] md:w-[70%] h-full w-full flex rounded-2xl shadow-2xl overflow-hidden">
@@ -15,14 +53,7 @@ export default function Home() {
             <p className="text-gray-500">Please login to access your account</p>
           </div>
 
-          <form
-            className="space-y-6"
-            onSubmit={(event) => {
-              event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              logInUser(formData);
-            }}
-          >
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
                 <label

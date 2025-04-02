@@ -7,7 +7,9 @@ export const metadata: Metadata = {
   description: "Messaging and marketplace website",
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+async function RootLayout({ children }: { children: React.ReactNode }) {
+  // We will handle session management in the client components
+  // to ensure proper Redux integration
   return (
     <html lang="en">
       <body>
@@ -15,6 +17,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </body>
     </html>
   );
-};
+}
 
 export default RootLayout;

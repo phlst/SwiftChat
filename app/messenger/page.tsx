@@ -1,9 +1,19 @@
 import Chat from "../_components/Chat";
 import Layout from "../_components/Layout";
 import MessengerSideBar from "../_components/MessengerSideBar";
+import ProtectedRoutes from "../_components/ProtectedRoutes";
+import { createSessionClient } from "../lib/db/appwrite";
 
-function page() {
-  return <Layout children1={<MessengerSideBar />} children2={<Chat />} />;
+async function page() {
+  const user = await (
+    await createSessionClient()
+  ).account.client.config.session;
+
+  return (
+    <ProtectedRoutes user={user}>
+      <Layout children1={<MessengerSideBar />} children2={<Chat />} />;
+    </ProtectedRoutes>
+  );
 }
 
 export default page;

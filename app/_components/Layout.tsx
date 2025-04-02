@@ -8,9 +8,9 @@ function Layout({
   children2: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen gap-5 md:p-4 overflow-hidden bg-zinc-700">
+    <div className="flex h-screen gap-5 md:p-4 bg-zinc-700 overflow-hidden">
       <Header />
-      <div className="w-full md:max-w-72 rounded-xl lg:max-w-132 lg:w-[40%] bg-background h-full flex ">
+      <div className="w-full md:max-w-72 rounded-xl lg:max-w-132 lg:w-[40%] bg-background h-full flex">
         <div className="pt-5 flex-grow overflow-hidden">{children1}</div>
       </div>
       <div className="border-l-2 border-shader/20 rounded-xl hidden md:block grow bg-background">

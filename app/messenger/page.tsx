@@ -11,7 +11,7 @@ async function page() {
 
   return (
     <ProtectedRoutes user={user}>
-      <Layout children1={<MessengerSideBar />} children2={<Chat />} />;
+      <Layout children1={<MessengerSideBar />} children2={<Chat />} />
     </ProtectedRoutes>
   );
 }

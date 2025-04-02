@@ -42,8 +42,10 @@ export default function Register() {
   }, [router, session, isLoggedIn, dispatch]);
 
   const handleRegistration = async (formData: FormData) => {
-    await createUser(formData);
-    // The server action (createUser) internally calls logInUser which has the redirect logic
+    const data = await createUser(formData);
+    if (data.success === true && data.redirect) {
+      router.push(data.redirect);
+    }
   };
 
   return (

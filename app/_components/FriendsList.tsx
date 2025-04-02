@@ -102,7 +102,9 @@ function FriendsList() {
               fill={true}
               alt="friend's image"
               src={friend.img}
+              sizes="cover"
               className="rounded-full object-cover"
+              priority={true}
             />
           </div>
 

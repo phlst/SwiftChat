@@ -11,7 +11,7 @@ async function page() {
 
   return (
     <ProtectedRoutes user={user}>
-      <Layout children1={<Filter />} children2={<Marketplace />} />;
+      <Layout children1={<Filter />} children2={<Marketplace />} />
     </ProtectedRoutes>
   );
 }

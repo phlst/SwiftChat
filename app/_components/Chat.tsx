@@ -153,8 +153,8 @@ function Chat() {
           <span
             className={`${
               message.receiver
-                ? "bg-dark-blue self-start ml-2"
-                : "bg-shader/50 self-end mr-2"
+                ? "bg-shader/20 self-start ml-2"
+                : "bg-dark-blue self-end mr-2"
             }  p-1 md:max-w-sm max-w-xs text-shader/80 font-bold rounded-lg mb-2`}
             key={i + message.message}
           >

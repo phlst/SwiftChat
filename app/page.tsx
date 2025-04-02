@@ -40,8 +40,10 @@ export default function Home() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    await logInUser(formData);
-    // No need for manual redirect as the server action will handle it
+    const data = await logInUser(formData);
+    if (data.success === true && data.redirect) {
+      router.push(data.redirect);
+    }
   };
 
   return (

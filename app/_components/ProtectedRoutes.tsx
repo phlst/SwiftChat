@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 
 function ProtectedRoutes({
@@ -10,14 +10,7 @@ function ProtectedRoutes({
   user: string;
 }) {
   const router = useRouter();
-
-  useEffect(() => {
-    if (user === "") {
-      router.push("/");
-    }
-  }, [router, user]);
-
-  return <>{children}</>;
+  return user === "" ? router.push("/") : <>{children}</>;
 }
 
 export default ProtectedRoutes;

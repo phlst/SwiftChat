@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { googleLogIn, logInUser } from "./lib/db/appwrite";
+import { logInUser } from "./lib/db/appwrite";
 
 export default function Home() {
   return (
@@ -135,7 +135,6 @@ export default function Home() {
               <form
                 onSubmit={(event) => {
                   event.preventDefault();
-                  googleLogIn();
                 }}
               >
                 <button

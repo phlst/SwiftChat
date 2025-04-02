@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Provider } from "react-redux";
-import { wrapper } from "./store/store"; // Adjust the path as needed
+import ContextProvider from "./ContextProvider";
 
 export const metadata: Metadata = {
   title: "SwiftChat",
@@ -12,7 +11,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body>
-        <Provider store={wrapper.store}>{children}</Provider>
+        <ContextProvider>{children}</ContextProvider>
       </body>
     </html>
   );

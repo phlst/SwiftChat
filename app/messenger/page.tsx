@@ -1,6 +1,6 @@
-import Chat from "../_components/Chat";
+import Chat from "../_components/Messenger/Chat";
 import Layout from "../_components/Layout";
-import MessengerSideBar from "../_components/MessengerSideBar";
+import MessengerSideBar from "../_components/Messenger/MessengerSideBar";
 import ProtectedRoutes from "../_components/ProtectedRoutes";
 import { createSessionClient } from "../lib/db/appwrite";
 

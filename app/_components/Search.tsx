@@ -86,24 +86,33 @@ interface SearchProps {
   inputColor?: "gray" | "blue";
   wantIcon?: boolean;
   onSubmit?: (value: string) => void;
+  onChange?: (value: string) => void;
 }
 
 // Search component
 const Search: React.FC<SearchProps> = ({
   className,
   text,
-  inputSize = "md", // Provide default value
-  inputColor = "gray", // Provide default value
-  wantIcon = true, // Provide default value
+  inputSize = "md",
+  inputColor = "gray",
+  wantIcon = true,
   onSubmit,
+  onChange,
 }) => {
   const [value, setValue] = useState<string>("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    if (onChange) {
+      onChange(e.target.value);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (onSubmit && value.trim() !== "") {
       onSubmit(value);
-      setValue(""); // Clear the input after submission
+      setValue("");
     }
   };
 
@@ -116,7 +125,7 @@ const Search: React.FC<SearchProps> = ({
       <FlexibleInput
         placeholder={text}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={handleChange}
         size={inputSize}
         color={inputColor}
       />

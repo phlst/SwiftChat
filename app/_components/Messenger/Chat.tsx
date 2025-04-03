@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import Search from "./Search";
+import Search from "./../Search";
 
 function Chat() {
   const [messages, setMessages] = useState([

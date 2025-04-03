@@ -89,7 +89,7 @@ const friendData = [
 
 function FriendsList() {
   return (
-    <div className="w-full scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-track-background scrollbar-thumb-zinc-700   mt-5 max-h-full overflow-y-auto overflow-x-hidden  flex pb-15 flex-col">
+    <div className="w-full scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-track-background scrollbar-thumb-zinc-700   mt-5 max-h-full overflow-y-auto overflow-x-hidden  flex pb-25 flex-col">
       {friendData.map((friend, i) => (
         <div
           className={`flex ${

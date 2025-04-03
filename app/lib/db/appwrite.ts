@@ -1,6 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
-import { Client, Account, ID } from "node-appwrite";
+import { Client, Account, ID, Databases, Query } from "node-appwrite";
 
 const ENDPOINT = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string;
 const PROJECT_ID = process.env.NEXT_PUBLIC_APPWRITE_ID as string;
@@ -10,30 +10,32 @@ function isString(value: FormDataEntryValue | null): value is string {
   return typeof value === "string";
 }
 
+const userClient = new Client().setEndpoint(ENDPOINT).setProject(PROJECT_ID);
+const databases = new Databases(userClient);
+
 function createAdminClient() {
-  const client = new Client()
+  const adminClient = new Client()
     .setEndpoint(ENDPOINT)
     .setProject(PROJECT_ID)
     .setKey(API_KEY);
 
   return {
     get account() {
-      return new Account(client);
+      return new Account(adminClient);
     },
   };
 }
 
 export async function createSessionClient() {
-  const client = new Client().setEndpoint(ENDPOINT).setProject(PROJECT_ID);
   const cookieStore = await cookies();
   const session = cookieStore.get("session");
 
   if (session) {
-    client.setSession(session.value);
+    userClient.setSession(session.value);
   }
   return {
     get account() {
-      return new Account(client);
+      return new Account(userClient);
     },
   };
 }
@@ -45,10 +47,17 @@ export async function createUser(formData: FormData) {
     const name = formData.get("name");
 
     if (isString(email) && isString(password) && isString(name)) {
-      const { account } = await createAdminClient();
+      const { account } = createAdminClient();
       await account.create(ID.unique(), email, password, name);
       const loginResult = await logInUser(formData);
-      // console.log("User created successfully:", user);
+      const uniqueId = ID.unique();
+      console.log(`Generated unique ID: ${uniqueId}`);
+
+      await databases.createDocument("messenger", "users", uniqueId, {
+        name: name,
+        email: email,
+      });
+
       return { success: true, redirect: loginResult.redirect };
     } else {
       console.error("Invalid form data");
@@ -60,6 +69,22 @@ export async function createUser(formData: FormData) {
   }
 }
 
+export async function searchUsersByPrefix(prefix: string) {
+  try {
+    const response = await databases.listDocuments("messenger", "users", [
+      Query.startsWith("name", prefix),
+    ]);
+    console.log(response.documents);
+    return response.documents.map((doc) => ({
+      name: doc.name,
+      email: doc.email,
+      avatar: doc.avatar_url,
+    }));
+  } catch (error) {
+    console.error("Error searching users:", error);
+    return [];
+  }
+}
 export async function logInUser(formData: FormData) {
   try {
     const email = formData.get("email");

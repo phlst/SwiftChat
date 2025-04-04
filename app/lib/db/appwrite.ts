@@ -51,40 +51,44 @@ export async function createUser(formData: FormData) {
       await account.create(ID.unique(), email, password, name);
       const loginResult = await logInUser(formData);
       const uniqueId = ID.unique();
-      console.log(`Generated unique ID: ${uniqueId}`);
 
-      await databases.createDocument("messenger", "users", uniqueId, {
-        name: name,
-        email: email,
-      });
+      await databases.createDocument(
+        "messenger",
+        "67ef817500333ae9c136",
+        uniqueId,
+        {
+          name: name,
+          email: email,
+        }
+      );
 
       return { success: true, redirect: loginResult.redirect };
     } else {
-      console.error("Invalid form data");
       return { success: false, error: "Invalid form data" };
     }
   } catch (error) {
-    console.error("Error creating user:", error);
     return { success: false, error };
   }
 }
 
 export async function searchUsersByPrefix(prefix: string) {
   try {
-    const response = await databases.listDocuments("messenger", "users", [
-      Query.startsWith("name", prefix),
-    ]);
-    console.log(response.documents);
+    const response = await databases.listDocuments(
+      "messenger",
+      "67ef817500333ae9c136",
+      [Query.startsWith("name", prefix)]
+    );
     return response.documents.map((doc) => ({
       name: doc.name,
       email: doc.email,
       avatar: doc.avatar_url,
     }));
   } catch (error) {
-    console.error("Error searching users:", error);
+    console.log(error);
     return [];
   }
 }
+
 export async function logInUser(formData: FormData) {
   try {
     const email = formData.get("email");
@@ -94,14 +98,11 @@ export async function logInUser(formData: FormData) {
       const cookieStore = await cookies();
       const session = await account.createEmailPasswordSession(email, password);
       cookieStore.set("session", session.secret);
-      // console.log("User logged in successfully:", session);
       return { success: true, redirect: "/messenger" };
     } else {
-      console.error("Invalid form data");
       return { success: false, error: "Invalid form data" };
     }
   } catch (error) {
-    console.error("Error logging in:", error);
     return { success: false, error };
   }
 }
@@ -114,7 +115,6 @@ export async function getCurrentUser() {
     const user = await account.get();
     return { success: true, user };
   } catch (error) {
-    console.error("Error getting current user:", error);
     return { success: false, error };
   }
 }
@@ -127,7 +127,6 @@ export async function logoutUser() {
     (await cookieStore).delete("session");
     return { success: true };
   } catch (error) {
-    console.error("Error logging out:", error);
     return { success: false, error };
   }
 }
